@@ -26,10 +26,11 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <sys/ioctl.h>
-#include <linux/fb.h>
+//#include <linux/fb.h>
 #include <unistd.h>
 #include <dirent.h>
-#include <mntent.h>
+//#include <mntent.h>
+#include <libgen.h>
 #include <x86/x86-linux.h>
 #include "../../kexec.h"
 #include "kexec-x86.h"
@@ -103,6 +104,7 @@ void setup_linux_bootloader_parameters(
 	cmdline_ptr[cmdline_len - 1] = '\0';
 }
 
+#if 0
 int setup_linux_vesafb(struct x86_linux_param_header *real_mode)
 {
 	struct fb_fix_screeninfo fix;
@@ -156,6 +158,7 @@ int setup_linux_vesafb(struct x86_linux_param_header *real_mode)
 	close(fd);
 	return -1;
 }
+#endif
 
 #define EDD_SYFS_DIR "/sys/firmware/edd"
 
@@ -399,6 +402,7 @@ out:
  * to be mounted once (sysfs, debugsfs, proc), as it will return the first
  * instance listed in mtab.
  */
+#if 0
 char *find_mnt_by_fsname(char *fsname)
 {
 	FILE *mtab;
@@ -416,6 +420,7 @@ char *find_mnt_by_fsname(char *fsname)
 	endmntent(mtab);
 	return mntdir;
 }
+#endif
 
 void setup_subarch(struct x86_linux_param_header *real_mode)
 {
@@ -424,7 +429,9 @@ void setup_subarch(struct x86_linux_param_header *real_mode)
 	char *debugfs_mnt;
 	char filename[PATH_MAX];
 
+#if 0
 	debugfs_mnt = find_mnt_by_fsname("debugfs");
+#endif
 	if (!debugfs_mnt)
 		return;
 	snprintf(filename, PATH_MAX, "%s/%s", debugfs_mnt, "boot_params/data");
@@ -461,7 +468,7 @@ void setup_linux_system_parameters(struct x86_linux_param_header *real_mode,
 	real_mode->orig_video_ega_bx = 0;
 	real_mode->orig_video_isVGA = 1;
 	real_mode->orig_video_points = 16;
-	setup_linux_vesafb(real_mode);
+//	setup_linux_vesafb(real_mode);
 
 	/* Fill in the memsize later */
 	real_mode->ext_mem_k = 0;

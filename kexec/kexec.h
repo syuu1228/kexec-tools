@@ -8,12 +8,15 @@
 #include <stdint.h>
 #include <string.h>
 #define USE_BSD
-#include <byteswap.h>
-#include <endian.h>
+#include <sys/endian.h>
 #define _GNU_SOURCE
 
 #include "kexec-elf.h"
 #include "unused.h"
+
+#define BYTE_ORDER _BYTE_ORDER
+#define LITTLE_ENDIAN _LITTLE_ENDIAN
+#define BIG_ENDIAN _BIG_ENDIAN
 
 #ifndef BYTE_ORDER
 #error BYTE_ORDER not defined
@@ -31,25 +34,25 @@
 #define cpu_to_le16(val) (val)
 #define cpu_to_le32(val) (val)
 #define cpu_to_le64(val) (val)
-#define cpu_to_be16(val) bswap_16(val)
-#define cpu_to_be32(val) bswap_32(val)
-#define cpu_to_be64(val) bswap_64(val)
+#define cpu_to_be16(val) bswap16(val)
+#define cpu_to_be32(val) bswap32(val)
+#define cpu_to_be64(val) bswap64(val)
 #define le16_to_cpu(val) (val)
 #define le32_to_cpu(val) (val)
 #define le64_to_cpu(val) (val)
-#define be16_to_cpu(val) bswap_16(val)
-#define be32_to_cpu(val) bswap_32(val)
-#define be64_to_cpu(val) bswap_64(val)
+#define be16_to_cpu(val) bswap16(val)
+#define be32_to_cpu(val) bswap32(val)
+#define be64_to_cpu(val) bswap64(val)
 #elif BYTE_ORDER == BIG_ENDIAN
-#define cpu_to_le16(val) bswap_16(val)
-#define cpu_to_le32(val) bswap_32(val)
-#define cpu_to_le64(val) bswap_64(val)
+#define cpu_to_le16(val) bswap16(val)
+#define cpu_to_le32(val) bswap32(val)
+#define cpu_to_le64(val) bswap64(val)
 #define cpu_to_be16(val) (val)
 #define cpu_to_be32(val) (val)
 #define cpu_to_be64(val) (val)
-#define le16_to_cpu(val) bswap_16(val)
-#define le32_to_cpu(val) bswap_32(val)
-#define le64_to_cpu(val) bswap_64(val)
+#define le16_to_cpu(val) bswap16(val)
+#define le32_to_cpu(val) bswap32(val)
+#define le64_to_cpu(val) bswap64(val)
 #define be16_to_cpu(val) (val)
 #define be32_to_cpu(val) (val)
 #define be64_to_cpu(val) (val)

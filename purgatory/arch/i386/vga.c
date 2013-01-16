@@ -1,4 +1,7 @@
-#include <sys/io.h>
+//#include <sys/io.h>
+#include <sys/cdefs.h>
+#include <sys/types.h>
+#include <machine/cpufunc.h>
 #include <purgatory.h>
 #include "purgatory-x86.h"
 
